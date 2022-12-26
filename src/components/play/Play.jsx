@@ -27,6 +27,14 @@ function importAll(r) {
 const images = importAll(require.context('../../images/cards-r', false, /\.(png|jpe?g|svg)$/));
  
 
+// shuffle deck 
+function shuffleArray(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+}
+
 
 const Play = ({sets}) =>{
     const  {green} = useContext(ThemeContext)
@@ -41,19 +49,26 @@ const Play = ({sets}) =>{
         const card = new Card(num,url,back)
         cardsList.push(card)
     }
+    // shuffle deck before start the game 
+    shuffleArray(cardsList)
     // take 16 carads to the field
     const [fields, setFields] = useState(cardsList.slice(0,16))
     cardsList = cardsList.slice(16)
     const [deck, setDeck] = useState(cardsList)
+    const [wait, setWait] = useState(false)
 
     function handleClick(e,card){
-        // remove empty card 
+        // ignore click on empty card 
         if (e.target.src.split('/').at(-1) == empty.split('/').at(-1)) return;
+        // ignore click during waiting time 
+        if (wait) return;
         e.target.src= card.url
         if (chosen.length==0){
         e.target.id = 'open'}
         setChosen(prev =>[...prev,card])
         if (chosen.length==1){
+            // set wait to ignore click during wating time 
+            setWait(true)
             // get open card 
             let open = document.querySelector('#open')
             // check pair 
@@ -61,7 +76,6 @@ const Play = ({sets}) =>{
                 console.log('pair')
                 sets.setPairs(prev=>prev+1)
                 // put new 2 cards 
-                console.log(deck)
                 let first;
                 let second;
                 if (deck.length==0){
@@ -93,6 +107,7 @@ const Play = ({sets}) =>{
                 setFields(newFields)
                 setDeck(prev => prev.slice(2,))
                 setChosen([])
+                setWait(false)
                 // finish 
                 console.log(sets.pairs)
                 if (sets.pairs==25){
@@ -114,6 +129,7 @@ const Play = ({sets}) =>{
               open.removeAttribute('id')
               open.src=card.back
               setChosen([])
+              setWait(false)
             },2000)  
               
         }
