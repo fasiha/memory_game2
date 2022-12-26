@@ -2,8 +2,11 @@ import './play.css'
 import React, { useState, useEffect,useContext } from 'react';
 import { ThemeContext } from '../../App';
 
+import {useNavigate} from 'react-router-dom';
+
 import r from '../../images/back-r/astronaut.png'
 import g from '../../images/back-r/blue2.png'
+import empty from '../../images/back-r/empty.png'
 
 
 class Card {
@@ -28,6 +31,7 @@ const images = importAll(require.context('../../images/cards-r', false, /\.(png|
 const Play = ({sets}) =>{
     const  {green} = useContext(ThemeContext)
     const [chosen,setChosen] = useState([])
+    const navigate = useNavigate()
     
     let cardsList = []
     for (const[key,value] of Object.entries(images)){
@@ -40,11 +44,14 @@ const Play = ({sets}) =>{
     // take 16 carads to the field
     const [fields, setFields] = useState(cardsList.slice(0,16))
     cardsList = cardsList.slice(16)
-    console.log(fields)
+    const [deck, setDeck] = useState(cardsList)
 
     function handleClick(e,card){
+        // remove empty card 
+        if (e.target.src.split('/').at(-1) == empty.split('/').at(-1)) return;
         e.target.src= card.url
-        e.target.id = 'open'
+        if (chosen.length==0){
+        e.target.id = 'open'}
         setChosen(prev =>[...prev,card])
         if (chosen.length==1){
             // get open card 
@@ -54,24 +61,46 @@ const Play = ({sets}) =>{
                 console.log('pair')
                 sets.setPairs(prev=>prev+1)
                 // put new 2 cards 
-                const first = cardsList.shift()
-                const second = cardsList.shift()
-                const newFields = fields.map((obj)=>{
-                    console.log(e.target.src,obj.url)
-                    if (obj.url==chosen.at(0).url){
+                console.log(deck)
+                let first;
+                let second;
+                if (deck.length==0){
+                    first = new Card('empty',empty,empty)
+                    second = new Card('empty',empty,empty)
+                }
+                else {
+                    first = deck.at(0)
+                    second = deck.at(1)
+                }
+                let newFields = [...fields]
+                newFields = newFields.map((obj)=>{
+                    if (obj?.url==chosen.at(0).url){
                         console.log('match')
                         return first
                     }
-                    else if (obj.url.split('/').at(-1)==e.target.src.split('/').at(-1)){
+                    else if (obj?.url.split('/').at(-1)==e.target.src.split('/').at(-1)){
                         console.log('match')
                         return second
                     }
                     return obj
                 })
-                console.log(newFields)
 
+                // flip open cards back 
+                setTimeout(()=>{
+                e.target.src= card.back
+                open.removeAttribute('id')
+                open.src = card.back
                 setFields(newFields)
+                setDeck(prev => prev.slice(2,))
                 setChosen([])
+                // finish 
+                console.log(sets.pairs)
+                if (sets.pairs==25){
+                    console.log('Complete')
+                    navigate('/score',{state:{"trial":sets.trial}})
+
+                }
+                },2000)
 
             }
             else 
@@ -80,6 +109,7 @@ const Play = ({sets}) =>{
               // flip back after 3 seconds
 
               setTimeout(()=>{
+              e.target.removeAttribute('id')
               e.target.src= card.back
               open.removeAttribute('id')
               open.src=card.back
@@ -96,8 +126,13 @@ const Play = ({sets}) =>{
 
     return (
         <div className ='play'>
-            {fields?.map((card,i) =>
-            <img  src={card.back} key={i} onClick={(e)=>{handleClick(e,card)}} attr='back of card'/>)}
+            {fields?.map((card,i) =>{
+            if (card?.back){   
+            return (<img  src={card.back} key={i} onClick={(e)=>{handleClick(e,card)}} attr='back of card'/>)}
+            else {
+                return (<img src={empty} key={i} attr="empty card"/>)
+            }        
+        })}
         </div>
     )
 }

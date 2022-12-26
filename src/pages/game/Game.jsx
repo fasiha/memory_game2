@@ -21,7 +21,7 @@ const Game = ()=>{
     return (
         <div className='game' style={themeStyle}>
             <Counter counts ={{pairs,trial}}/>
-            <Play sets={{setTrial,setPairs}} />
+            <Play sets={{setTrial,setPairs,pairs,trial}} />
         </div>
     )
 }
