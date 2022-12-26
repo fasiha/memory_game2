@@ -1,3 +1,7 @@
+# Memory game 
+
+This Memory Card game was build with React. If you click on the card in the navigation bar, the application design will change a little.
+
 ## Credit 
 
 Card images were downloaded from https://en.wikipedia.org/wiki/Standard_52-card_deck and 
