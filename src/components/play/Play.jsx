@@ -35,7 +35,6 @@ function shuffleArray(arr) {
     }
 }
 
-
 const Play = ({sets}) =>{
     const  {green} = useContext(ThemeContext)
     const [chosen,setChosen] = useState([])
@@ -51,6 +50,13 @@ const Play = ({sets}) =>{
     }
     // shuffle deck before start the game 
     shuffleArray(cardsList)
+
+    // flip color 
+const themeStyle = {
+    backgroundColor: green? 'rgba(0, 128, 0, 0.781)':'#ff4800',
+    color: 'white' 
+ }
+
     // take 16 carads to the field
     const [fields, setFields] = useState(cardsList.slice(0,16))
     cardsList = cardsList.slice(16)
@@ -135,13 +141,12 @@ const Play = ({sets}) =>{
         }
         }
 
-        // sets.setPairs(prev=>prev+1)
-        // sets.setTry(prev=>prev+1)
+    
     }
     
 
     return (
-        <div className ='play'>
+        <div className ='play' style={themeStyle}>
             {fields?.map((card,i) =>{
             if (card?.back){   
             return (<img  src={card.back} key={i} onClick={(e)=>{handleClick(e,card)}} attr='back of card'/>)}

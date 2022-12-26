@@ -12,14 +12,10 @@ const Game = ()=>{
     const [pairs,setPairs] = useState(0)
     const [trial, setTrial] = useState(0)
     
-    // flip color 
-    const themeStyle = {
-        backgroundColor: green? 'rgba(0, 128, 0, 0.781)':'#ff4800',
-        color: 'white' 
-     }
+    
      
     return (
-        <div className='game' style={themeStyle}>
+        <div className='game' >
             <Counter counts ={{pairs,trial}}/>
             <Play sets={{setTrial,setPairs,pairs,trial}} />
         </div>

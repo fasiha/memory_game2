@@ -1,11 +1,21 @@
+@media only screen and (max-width: 600px) {
+    .play img {
+        width:60px;
+        height:40 px;
+    }
+  }
+
+
+
 .play {
-    height:calc(100vh - 50px);
+    height: max (900px, calc(100vh - 50px));
     display:grid;
     grid-template-columns: 25% 25% 25% 25%;
     
+    
 }
 
-.play img{
+img{
     height:160px;
     width:auto;
     align-self: center;
