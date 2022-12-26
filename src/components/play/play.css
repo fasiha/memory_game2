@@ -1,0 +1,13 @@
+.play {
+    height:calc(100vh - 50px);
+    display:grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    
+}
+
+.play img{
+    height:160px;
+    width:auto;
+    align-self: center;
+    justify-self:center;
+}

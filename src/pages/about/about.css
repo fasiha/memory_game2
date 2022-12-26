@@ -1,0 +1,13 @@
+.about {
+    width:auto;
+    height: calc(100vh - 50px);
+    padding:10px;
+}
+
+.about a {
+    color:white;
+}
+
+.about a:hover {
+    color:blue;
+}
