@@ -1,5 +1,7 @@
 .counter {
     display:flex;
+    height:50px;
+    align-items: center;
     justify-content: space-between;
     padding-left:50px;
     padding-right:50px;

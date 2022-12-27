@@ -8,7 +8,8 @@
 
 
 .play {
-    height: max (900px, calc(100vh - 50px));
+    
+    height: max(900px, 100vh);
     display:grid;
     grid-template-columns: 25% 25% 25% 25%;
     

@@ -1,6 +1,6 @@
 # Memory game 
 
-This Memory Card game was build with React. If you click on the card in the navigation bar, the application design will change a little.
+This Memory Card game was build with React. If you click on the card in the navigation bar, the application design will change a little. You can play the game here. https://satoshi-sh.github.io/memory_game2/
 
 ## Credit 
 
