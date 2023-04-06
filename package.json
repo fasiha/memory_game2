@@ -16,7 +16,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --transformIgnorePatterns",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
@@ -40,6 +40,11 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^4.0.0"
+    "babel-plugin-transform-require-context": "^0.1.1",
+    "gh-pages": "^4.0.0",
+    "react-test-renderer": "^18.2.0"
+  },
+  "transform": {
+    "\\.js$": "./node_modules/babel-jest"
   }
 }

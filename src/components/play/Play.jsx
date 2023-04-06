@@ -23,16 +23,26 @@ function importAll(r) {
     r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
     return images;
   }
-  
-const images = importAll(require.context('../../images/cards-r', false, /\.(png|jpe?g|svg)$/));
- 
 
 // shuffle deck 
-function shuffleArray(arr) {
+export function shuffleArray(arr) {
     for (let i = arr.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [arr[i], arr[j]] = [arr[j], arr[i]];
     }
+}
+
+export function makeCardsList(images,green){
+    let list = []
+    console.log(images)
+    for (const[key,value] of Object.entries(images)){
+        const num = key.split('_').at(-1).split('.').at(0);
+        const url = value;
+        const back = green? g : r;
+        const card = new Card(num,url,back)
+        list.push(card)
+    }
+    return list;
 }
 
 const Play = ({sets}) =>{
@@ -40,14 +50,10 @@ const Play = ({sets}) =>{
     const [chosen,setChosen] = useState([])
     const navigate = useNavigate()
     
-    let cardsList = []
-    for (const[key,value] of Object.entries(images)){
-        const num = key.split('_').at(-1).split('.').at(0);
-        const url = value;
-        const back = green? g : r;
-        const card = new Card(num,url,back)
-        cardsList.push(card)
-    }
+    const images = importAll(require.context('../../images/cards-r', false, /\.(png|jpe?g|svg)$/));
+    let cardsList = makeCardsList(images,green)
+
+    
     // shuffle deck before start the game 
     shuffleArray(cardsList)
 
