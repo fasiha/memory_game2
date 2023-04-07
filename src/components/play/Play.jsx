@@ -34,7 +34,6 @@ export function shuffleArray(arr) {
 
 export function makeCardsList(images,green){
     let list = []
-    console.log(images)
     for (const[key,value] of Object.entries(images)){
         const num = key.split('_').at(-1).split('.').at(0);
         const url = value;
