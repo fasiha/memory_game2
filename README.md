@@ -9,6 +9,13 @@
 ### Description 
   Memory Card game was build with React. Used React Router DOM to switch pages and React Context to change the design of the whole application (You can click on the card in the navigation bar to change). JavaScript classes was used to build trump card deck, to keep the code clearner.  
 
+
+### Run Locally
+In this repository, run this command.
+```npm start```
+Open http://localhost:3000/memory_game2 to view it in your browser.
+
+
 ### Live Page
 [Live Page](https://satoshi-sh.github.io/memory_game2/)
 
