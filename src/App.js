@@ -22,7 +22,7 @@ function App() {
       <div className='content'>
       <ThemeContext.Provider value={{green}}>
       <Routes>
-        <Route exaxt path='/' element = {<Homepage />}/>
+        <Route exact path='/' element = {<Homepage />}/>
         <Route path ='/about' element = {<About />} />
         <Route path ='/game' element={<Game />} />
         <Route path= '/score' element= {<Score />} /> 
