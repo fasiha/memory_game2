@@ -6,14 +6,13 @@ import blue from '../../images/back-r/blue2.png'
 
 // this way of writing might be able to get tested.
 // need to find out the way to make it testable 
-export default function TopBar() {
+export default function TopBar(props) {
     
-    const [green,setGreen] = useState(true)
+    const {green,setGreen} = props
     function handleClick(){
       setGreen(prev=>!prev)
     }
-    return {green,
-       render:(
+    return (
       <div className="top">
          <div className="topLeft" >
          <h1 className='logo'>Memory</h1> 
@@ -36,7 +35,7 @@ export default function TopBar() {
       </div>
     </div>)
       }
-  }
+
 // for testing  for now
 export const Test = () => 
   {

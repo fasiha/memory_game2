@@ -1,7 +1,7 @@
 import './App.css';
 import TopBar from './components/topbar/TopBar'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 
 import Homepage from './pages/homepage/Homepage'
 import About from './pages/about/About'
@@ -12,13 +12,13 @@ import NoPage from './pages/nopage/Nopage'
 export const ThemeContext = React.createContext()
 
 function App() {
-  const {render,green} = TopBar()
+  const [green,setGreen] = useState(true)
 
   return (
     <div className="App">
     
     <Router basename='memory_game2'>
-      {render}
+      <TopBar green={green} setGreen={setGreen}/>
       <div className='content'>
       <ThemeContext.Provider value={{green}}>
       <Routes>
