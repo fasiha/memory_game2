@@ -22,19 +22,28 @@ describe("App component", () => {
     expect(aboutLink).toBeInTheDocument();
   });
 
-  it("should toggle the card image after each click", () => {
+  it("should toggle the card image after each click", async () => {
     // mocking green,setGreen
 
-    render(
+    const green = true;
+    const setGreen = jest.fn();
+    const { rerender } = render(
       <MemoryRouter>
         <TopBar green={green} setGreen={setGreen} />
       </MemoryRouter>
     );
     const user = userEvent.setup();
-    const image = screen.getByRole("img");
+    let image = screen.getByRole("img");
     expect(image.src.split("\\").pop().split("/").pop()).toMatch(/blue2.png/);
-    user.click(image);
-    screen.debug();
+    await user.click(image);
+    expect(setGreen).toHaveBeenCalled();
+    const newGreen = !green;
+    rerender(
+      <MemoryRouter>
+        <TopBar green={newGreen} setGreen={setGreen} />
+      </MemoryRouter>
+    );
+    image = screen.getByRole("img");
     expect(image.src.split("\\").pop().split("/").pop()).toMatch(
       /astronaut.png/
     );
